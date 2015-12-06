@@ -39,7 +39,7 @@
 
 </div>
 
-@using (Html.BeginForm("Index", "Contact", FormMethod.Post, new { @class = "form-horizontal" }))
+@using (Html.BeginForm("Send", "Contact", FormMethod.Post, new { @class = "form-horizontal" }))
 {
     @Html.AntiForgeryToken()
     <div class="form-group">

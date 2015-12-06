@@ -24,10 +24,10 @@ namespace wpug.Controllers
 
             return View();
         }
-
-        [HttpPost]
+        
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Index(ContactModel model)
+        [Route("Send")]
+        public async Task<ActionResult> Send(ContactModel model)
         {
             if (ModelState.IsValid)
             {
@@ -55,7 +55,7 @@ namespace wpug.Controllers
             }
 
             // The view was invalid
-            return View(model);
+            return View("index");
         }
 
         private async Task<int> SendSlackMessage(ContactModel model)
