@@ -127,7 +127,7 @@ namespace wpug.Controllers
                         // Read the content.
                         var responseFromServer = reader.ReadToEnd();
 
-                        if (responseFromServer.ToLowerInvariant() == "ok") return 3;
+                        if (responseFromServer.Equals("ok", StringComparison.OrdinalIgnoreCase)) return 3;
                     }
                 }
             }
