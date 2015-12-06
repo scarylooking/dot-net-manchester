@@ -1,0 +1,9 @@
+packages/
+bin/
+obj/
+PublishScripts/
+.vs/
+*.suo
+*.user
+ApplicationInsights.config
+Secrets.config

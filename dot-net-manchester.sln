@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PublishScripts", "PublishScripts", "{5CD44BEB-C258-4993-8FC6-FE1E1AB8D683}"
+	ProjectSection(SolutionItems) = preProject
+		PublishScripts\AzureWebsitePublishModule.psm1 = PublishScripts\AzureWebsitePublishModule.psm1
+		PublishScripts\Publish-WebApplicationWebsite.ps1 = PublishScripts\Publish-WebApplicationWebsite.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configurations", "Configurations", "{FFDD8255-E4AB-4C19-B70C-036DC01DC1B6}"
+	ProjectSection(SolutionItems) = preProject
+		PublishScripts\Configurations\wpug-WAWS-dev.json = PublishScripts\Configurations\wpug-WAWS-dev.json
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dot-net-manchester", "dot-net-manchester\dot-net-manchester.csproj", "{5A4CAAB4-4889-424F-9984-351D40542435}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5A4CAAB4-4889-424F-9984-351D40542435}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A4CAAB4-4889-424F-9984-351D40542435}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A4CAAB4-4889-424F-9984-351D40542435}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A4CAAB4-4889-424F-9984-351D40542435}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FFDD8255-E4AB-4C19-B70C-036DC01DC1B6} = {5CD44BEB-C258-4993-8FC6-FE1E1AB8D683}
+	EndGlobalSection
+EndGlobal

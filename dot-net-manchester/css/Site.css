@@ -1,0 +1,87 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+/*input,
+select,
+textarea {
+    max-width: 560px;
+}*/
+
+.btn span.fa, .alert span.fa, li span.fa {
+    margin-right: 10px;
+}
+
+.navbar span.fa {
+    margin-right: 5px;
+}
+
+.field-validation-error {
+    color: #cc002e;
+}
+
+  .app.with-caption {
+    display: inline-block;
+  }
+  .app.with-caption p {
+    margin: 0;
+    padding-top: 0.5em;
+  }
+  .app.with-caption small:before {
+    content: '\2014 \00A0';
+  }
+  .app.with-caption small {
+    width: 100%;
+    text-align: right;
+    display: inline-block;
+    color: #999;
+  }
+
+  .wpug-logo {
+      max-height: 200px;
+      max-width: 200px;
+  }
+
+/* centered columns styles */
+.row-centered {
+    text-align:center;
+}
+
+.col-centered {
+    display:inline-block;
+    float:none;
+    text-align:left;
+}
+
+.booking-button{
+    margin-top: 40px;
+}
+
+img.speaker {
+    margin: 0px 10px 10px 0px;
+    float:left;
+}
+
+p.speaker-text{
+    overflow: hidden;
+}
+
+img.sponsor-jetbrains{
+    height: 90px;
+    width: 246px;
+}
