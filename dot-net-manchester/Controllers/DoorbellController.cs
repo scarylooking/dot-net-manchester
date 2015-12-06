@@ -53,7 +53,7 @@ namespace wpug.Controllers
                 var jsonMessage = JsonConvert.SerializeObject(message);
                 var postData = encoding.GetBytes(jsonMessage);
 
-                var request = WebRequest.Create(ConfigurationManager.AppSettings["DoorbellWebHookUrl"]);
+                var request = WebRequest.Create(ConfigurationManager.AppSettings["SlackDoorbellWebHook"]);
                 request.ContentType = "application/json";
                 request.Method = "POST";
                 request.ContentLength = postData.Length;

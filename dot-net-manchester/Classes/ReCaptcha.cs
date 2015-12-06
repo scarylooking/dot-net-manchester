@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -19,13 +20,11 @@ namespace wpug.Classes
 
     public static class ReCaptcha
     {
-        private const string Secret = "6LcWUwgTAAAAAP9LjmAciqUUh-xE5Lt0JChjcGfj";
-
         public async static Task<bool> Validate(String response)
         {
             if (response == null) return false;
 
-            var requestUrl = string.Format("https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", Secret, response);
+            var requestUrl = string.Format("https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", ConfigurationManager.AppSettings["ReCaptchaSecret"], response);
             var request = WebRequest.Create(requestUrl);
 
             request.Method = "GET";

@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using Newtonsoft.Json;
 using wpug.Models;
 using wpug.Classes;
+using System.Configuration;
 
 namespace wpug.Controllers
 {
@@ -103,7 +104,7 @@ namespace wpug.Controllers
                 var jsonMessage = JsonConvert.SerializeObject(message);
                 var postData = encoding.GetBytes(jsonMessage);
 
-                var request = WebRequest.Create("https://hooks.slack.com/services/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");
+                var request = WebRequest.Create(ConfigurationManager.AppSettings["SlackContactWebHook"]);
                 request.ContentType = "application/json";
                 request.Method = "POST";
                 request.ContentLength = postData.Length;
