@@ -21,12 +21,17 @@ namespace wpug
 
             bundles.Add(new ScriptBundle("~/js/bootstrap").Include(
                       "~/scripts/bootstrap.js",
+                      "~/scripts/date.js",
                       "~/scripts/respond.js"));
+
+            bundles.Add(new ScriptBundle("~/js/meetup-event").Include(
+                      "~/scripts/meetup-event.js"));
 
             bundles.Add(new StyleBundle("~/css/min").Include(
                       "~/css/bootstrap-cosmo.css",
                       "~/css/font-awesome.css",
                       "~/css/site.css"));
+
         }
     }
 }

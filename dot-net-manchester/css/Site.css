@@ -85,3 +85,7 @@ img.sponsor-jetbrains{
     height: 90px;
     width: 246px;
 }
+
+#noEvent, #eventError, #eventDetails{
+    display:none;
+}

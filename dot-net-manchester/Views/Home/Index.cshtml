@@ -3,35 +3,50 @@
     ViewBag.Description = "WPUGNW is an independant community-organised group that hosts meetups in Manchester for anyone interested in designing and developing for Windows; be that Phone, Desktop, IoT or even HoloLens.";
 }
 
+
 <div class="jumbotron">
     <h1 class="text-center">Windows Platform User Group North West</h1>
     <p class="lead text-center">WPUGNW is an independent community-organised group that hosts meetups in Manchester for anyone interested in designing or developing software for Windows; be that Phone, Desktop, IoT or even HoloLens.</p>
 </div>
 
-<section>
+<section id="eventError">
+    <div class="lead text-center alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle" aria-hidden="true"></i> Something went wrong loading details of our next event. Check us out on <a href="http://www.meetup.com/Manchester-NET/">Meetup</a> instead.</div>
+</section>
+
+<section id="noEvent">
+    <div class="lead text-center alert alert-warning"><i class="fa fa-fw fa-search" aria-hidden="true"></i> We're busy planning the next user group. Join our mailing list or the <a href="http://www.meetup.com/Manchester-NET/">Meetup</a> group to be notified of the next event.</div>
+</section>
+
+<section id="eventDetails">
     <header class="page-header">
-        <h1>Service Fabric: Build low-latency, self-healing, hyper-scalable apps</h1>
+        <h1 id="eventTitle">-</h1>
     </header>
 
-    <p><i class="fa fa-fw fa-calendar text-primary" aria-hidden="true"></i> Tuesday 23rd February 2015</p>
-    <p><i class="fa fa-fw fa-clock-o text-primary" aria-hidden="true"></i> <time datetime="2016-02-23 18:30">18:30</time> - <time datetime="2016-02-23 22:00">22:00</time></p>
-    <p><i class="fa fa-fw fa-map-marker text-primary" aria-hidden="true"></i> PLY, 24 Lever Street, Manchester, M1 1DZ</p>
+    <p><i class="fa fa-fw fa-calendar text-primary" aria-hidden="true"></i> <span id="eventDate">-</span></p>
+    <p><i class="fa fa-fw fa-clock-o text-primary" aria-hidden="true"></i> <span id="eventStartTime">-</span> - <span id="eventEndTime">-</span></p>
+    <p><i class="fa-fw fa fa-users text-primary" aria-hidden="true"></i> <span id="eventAttendees">0</span> registered attendees</p>
+    <p>
+        <i class="fa fa-fw fa-map-marker text-primary" aria-hidden="true"></i>
+        <strong>
+            <span class="strong" id="eventLocationName"></span>
+        </strong>
+        <span id="eventLocationAddress"></span>
+    </p>
 
     <hr>
 
-    <p>Joe Swan is Head of Technology at IAM Cloud, and co-organiser of HackManchester. He blogs regularly at <a href="http://codeburst.wordpress.com" target="_blank">codeburst.wordpress.com</a>.</p>
-
-    <p>In this talk, Joe will walk us through how Service Fabric can help you rapidly develop and update microservice-based applications and unlock true hybrid flexibility between Azure and on-premises.</p>
-
-    <p>We will cover what Service Fabric means to your Azure workload and how you can leverage Stateless and Stateful Services and Actors along with the Reliable Services API to create high-performance applications.</p>
-
-    <p>There will be information on some of the pitfalls of service communication as well as how to use Actors to off-load your compute to Azure in a variety of scenarios.</p>
-
+    <div id="eventText">
+    </div>
     <br>
 
-    <a href="http://www.meetup.com/Manchester-NET/events/228549469" target="_blank" class=" btn btn-warning">
+    <a href="#" id="bookingButton" disabled="true" target="_blank" class="btn btn-warning">
         <span class="fa fa-ticket" aria-hidden="true" disabled></span> Register to Attend
     </a>
+
+</section>
+
+<section id="loadingEvent">
+    <div class="lead text-center alert alert-info"><i class="fa fa-fw fa-circle-o-notch fa-spin" aria-hidden="true"></i> Loading Events</div>
 </section>
 
 <section>
@@ -76,9 +91,11 @@
     <p class="text-center">
         <a href="http://www.telerik.com/" target="_blank"><img alt="Green and black Telerik logo with 'A progress company' written below" src="~/img/sponsors/telerik.png" /></a>
         <a href="https://www.jetbrains.com/" target="_blank"><img alt="Yellow and blue JetBrains logo" class="sponsor-jetbrains" src="~/img/sponsors/jetbrains.svg" /></a>
-</p>
+    </p>
 
 </section>
+
+@Scripts.Render("~/js/meetup-event")
 
 <script type="application/ld+json">
     { "@@context" : "http://schema.org",
