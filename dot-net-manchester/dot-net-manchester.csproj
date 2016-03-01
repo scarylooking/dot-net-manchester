@@ -199,6 +199,7 @@
     <Content Include="img\organisers\richard-garner.jpg" />
     <Content Include="img\speakers\jeff-burtoft.jpg" />
     <Content Include="img\speakers\mike-taulty.jpg" />
+    <Content Include="img\sponsors\jetbrains.jpg" />
     <Content Include="img\sponsors\jetbrains.svg" />
     <Content Include="img\sponsors\telerik.png" />
     <Content Include="Scripts\date.js" />
