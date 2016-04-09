@@ -1,0 +1,105 @@
+﻿@Master['master.html']
+
+@Section['body']
+<div class="jumbotron">
+    <h1 class="text-center">Windows Platform User Group North West</h1>
+    <p class="lead text-center">WPUGNW is an independent community-organised group that hosts meetups in Manchester for anyone interested in designing or developing software for Windows; be that Phone, Desktop, IoT or even HoloLens.</p>
+</div>
+
+<section id="eventError"></section>
+
+<section id="noEvent"></section>
+
+<section data-bind="visible: !loading()">
+
+    <!-- ko if: error -->
+    <div class="lead text-center alert alert-danger">
+        <i class="fa fa-fw fa-exclamation-triangle" aria-hidden="true"></i> Something went wrong loading details of our next events. Check us out at <a href="http://www.meetup.com/Manchester-NET/">Meetup</a> or <a href="https://twitter.com/wpugnw">@wpugnw</a> instead.
+    </div>
+    <!-- /ko -->
+
+    <!-- ko if: meetups().length === 0 && !error() -->
+    <div class="lead text-center alert alert-warning">
+        <i class="fa fa-fw fa-search" aria-hidden="true"></i> We're busy planning the next user group. Keep an eye on <a href="https://twitter.com/wpugnw">@wpugnw</a> and the <a href="http://www.meetup.com/Manchester-NET/">Meetup</a> group.
+    </div>
+    <!-- /ko -->
+
+    <!-- ko if: meetups().length > 0 -->
+    <!-- ko foreach: meetups -->
+    <section>
+        <header class="page-header">
+            <h1 data-bind="text: name"></h1>
+        </header>
+
+        <p>
+            <i class="fa fa-fw fa-calendar text-primary" aria-hidden="true"></i>
+            <span data-bind="text: start.date">-</span>
+        </p>
+        <p>
+            <i class="fa fa-fw fa-clock-o text-primary" aria-hidden="true"></i>
+            <span data-bind="text: start.time"></span>
+            <!-- ko if: $data.end -->
+            - <span data-bind="visible: $data.end, text: end.time"></span>
+            <!-- /ko -->
+        </p>
+        <p>
+            <i class="fa-fw fa fa-users text-primary" aria-hidden="true"></i>
+            <span data-bind="text:attendees">0</span> registered attendees
+        </p>
+        <p>
+            <i class="fa fa-fw fa-map-marker text-primary" aria-hidden="true"></i>
+            <strong data-bind="text: venue"></strong>
+            <!-- ko if: $data.address -->
+            , <span data-bind="text: address"></span>
+            <!-- /ko -->
+        </p>
+
+        <hr>
+
+        <div data-bind="html:description"></div>
+
+        <br>
+
+        <a data-bind="attr: { href: url}, enable: url" id="bookingButton" target="_blank" class="btn btn-warning">
+            <i class="fa fa-ticket" aria-hidden="true" disabled></i> Register to Attend
+        </a>
+    </section>
+    <!-- /ko -->
+    <!-- /ko -->
+
+</section>
+
+<section id="loadingEvent" data-bind="visible: loading">
+    <div class="lead text-center alert alert-info"><i class="fa fa-fw fa-circle-o-notch fa-spin" aria-hidden="true"></i> Loading Events</div>
+</section>
+
+<section>
+    <header class="page-header">
+        <h1>Sponsors</h1>
+    </header>
+    <p class="text-center">
+        <a href="http://www.telerik.com/" target="_blank"><img alt="Green and black Telerik logo with 'A progress company' written below" src="/content/img/sponsors/telerik.jpg" /></a>
+        <a href="https://www.jetbrains.com/" target="_blank"><img alt="Colourful angular swoosh with 'Jetbrains' written in a black square in the centre" src="/content/img/sponsors/jetbrains.jpg" /></a>
+        <a href="https://www.pluralsight.com" target="_blank"><img alt="Pink circular Pluralsight logo with the word Pluralsight in black to the right" src="/content/img/sponsors/pluralsight.jpg" /></a>
+    </p>
+
+</section>
+@EndSection
+
+@Section['scripts']
+<script src="/content/js/moment.min.js" type="text/javascript"></script>
+<script src="/content/js/meetup-get.js" type="text/javascript"></script>
+
+<script type="application/ld+json">
+    { "@@context" : "http://schema.org",
+    "@@type" : "Organization",
+    "name" : "Windows Platform User Group North West",
+    "logo": "http://wpug.uk/img/logo.svg",
+    "name": "Windows Platform User Group North West",
+    "url": "http://wpug.uk",
+    "sameAs" : [ "https://www.facebook.com/wpugnw",
+    "https://twitter.com/wpugnw",
+    "http://wpug.uk.uk"]
+    }
+</script>
+@EndSection
