@@ -23,63 +23,37 @@
     @EndIf
 </div>
 
-
-<form action="/contact" class="form-horizontal" method="post">
-
-    @AntiForgeryToken
-
     <div class="form-group">
         <label class="control-label col-xs-12 col-sm-2" for="Name">Name</label>
         <div class="col-xs-12 col-sm-10">
-
-            @IfNot.status.name
-            @Partial['components/requiredFieldError.html']
-            @EndIf
-
-            <input class="form-control" name="Name" type="text" value="@Model.name">
+            <input class="form-control" data-bind="value: name" type="text" />
         </div>
     </div>
     <div class="form-group">
         <label class="control-label col-xs-12 col-sm-2" for="Email">Email</label>
         <div class="col-xs-12 col-sm-10">
-
-            @IfNot.status.email
-            @Partial['components/requiredFieldError.html']
-            @EndIf
-
-
-            <input class="form-control" name="EmailAddress" type="text" value="@Model.emailAddress">
+            <input class="form-control" data-bind="value: email" type="text" />
         </div>
     </div>
     <div class="form-group">
         <label class="control-label col-xs-12 col-sm-2" for="Message">Message</label>
         <div class="col-xs-12 col-sm-10">
-
-            @IfNot.status.message
-            @Partial['components/requiredFieldError.html']
-            @EndIf
-
-            <textarea class="form-control" cols="20" name="Message" rows="7">@Model.message</textarea>
+            <textarea class="form-control" cols="20" data-bind="value: message" rows="7"></textarea>
         </div>
     </div>
     <div class="form-group">
         <div class="col-sm-offset-2 col-xs-12 col-sm-10">
-
-            @IfNot.status.recaptcha
-            @Partial['components/requiredFieldError.html']
-            @EndIf
-
-            <div class="g-recaptcha" data-sitekey="6Lf0hBITAAAAALfdyxHR1vj3x6fHNsinD3lFofXr"></div>
+            <div class="g-recaptcha" id="recaptcha" data-sitekey="6Lf0hBITAAAAALfdyxHR1vj3x6fHNsinD3lFofXr"></div>
         </div>
     </div>
+
     <div class="form-group">
         <div class="col-sm-offset-2 col-xs-10">
-            <button type="submit" class="btn btn-success">Send</button>
+            <button id="sendButton" class="btn btn-success">Send</button>
         </div>
     </div>
-</form>
-@EndSection
 
 @Section['scripts']
+<script src='/content/js/contact-send.js'></script>
 <script src='https://www.google.com/recaptcha/api.js'></script>
 @EndSection

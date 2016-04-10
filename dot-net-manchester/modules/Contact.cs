@@ -1,10 +1,17 @@
 using Nancy;
+using Nancy.Helpers;
 using Nancy.ModelBinding;
 using Nancy.Responses.Negotiation;
 using Nancy.Security;
+using System;
+using System.Configuration;
+using System.IO;
+using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using wpug.models;
 using wpug.utility;
+using Newtonsoft.Json;
 
 namespace wpug.modules
 {
@@ -14,24 +21,56 @@ namespace wpug.modules
 
         public Contact()
         {
-            Post["/contact"] = parameters => {
-                try
+            Post["/contact", true] = async (parameters, ct) =>
+            {
+                var reCaptchaToken = Request.Form["reCaptchaToken"].Value;
+
+                if (string.IsNullOrWhiteSpace(reCaptchaToken))
                 {
-                    this.ValidateCsrfToken();
+                    return Nancy.HttpStatusCode.Forbidden;
                 }
-                catch (CsrfValidationException)
+
+                var model = this.Bind<ContactRequest>();
+                var response = new ContactResponse();
+                var failureFlag = false;
+
+                if (!ReCaptcha.Validate(reCaptchaToken))
                 {
-                    return HttpStatusCode.Forbidden;
+                    response.recaptcha = false;
+                    failureFlag = true;
                 }
 
-                var reCaptchaToken = Request.Form["grecaptcharesponse"].Value;
-
-                var model = this.BindTo(modelBase());
-
-                if (validateForm(ref model, reCaptchaToken))
+                if (string.IsNullOrWhiteSpace(model.emailAddress))
                 {
-                    // Process the form
-                    cleanModelOnSuccess(ref model);
+                    response.emailAddress = false;
+                    failureFlag = true;
+                }
+
+                if (string.IsNullOrWhiteSpace(model.message))
+                {
+                    response.message = false;
+                    failureFlag = true;
+                }
+
+                if (string.IsNullOrWhiteSpace(model.name))
+                {
+                    response.name = false;
+                    failureFlag = true;
+                }
+
+                if (failureFlag)
+                {
+                    return Negotiate.WithModel(response).WithStatusCode(Nancy.HttpStatusCode.BadRequest);
+                }
+
+
+                var slackResult = await SendSlackMessage(model);
+
+                if (slackResult)
+                {
+                }
+                else
+                {
                 }
 
                 return View["contact", model];
@@ -42,9 +81,9 @@ namespace wpug.modules
             Get["/contact-us"] = _ => navigateToContactView();
         }
 
-        private ContactFormPage modelBase()
+        private ContactRequest modelBase()
         {
-            return new ContactFormPage() { Title = pagename };
+            return new ContactRequest() { Title = pagename };
         }
 
         private Negotiator navigateToContactView()
@@ -52,44 +91,92 @@ namespace wpug.modules
             return View["contact", modelBase()];
         }
 
-        private void cleanModelOnSuccess(ref ContactFormPage model)
+
+        private async Task<bool> SendSlackMessage(ContactRequest model)
         {
-            model.submitted = true;
-            model.name = string.Empty;
-            model.emailAddress = string.Empty;
-            model.message = string.Empty;
-            model.status = new ContactFormStatus();
-        }
-
-        private bool validateForm (ref ContactFormPage model, string reCaptchaToken)
-        {
-            var submissionValid = true;
-
-            if (!ReCaptcha.Validate(reCaptchaToken))
+            try
             {
-                model.status.recaptcha = false;
-                submissionValid = false;
+                var safeEmail = HttpUtility.HtmlEncode(model.emailAddress);
+                var safeName = HttpUtility.HtmlEncode(model.name);
+                var safeMessage = HttpUtility.HtmlEncode(model.message);
+                const string messageFrom = "New message via wpug.uk...";
+
+                var message = new SlackAttachmentMessage();
+
+                var attachment = new SlackAttachment
+                {
+                    Colour = "#4c9689",
+                    Fallback = messageFrom,
+                    PreText = messageFrom
+                };
+
+                attachment.Fields.Add(new SlackField
+                {
+                    Short = true,
+                    Title = "Email",
+                    Value = safeEmail
+                });
+
+                attachment.Fields.Add(new SlackField
+                {
+                    Short = true,
+                    Title = "Name",
+                    Value = safeName
+                });
+
+                attachment.Fields.Add(new SlackField
+                {
+                    Short = false,
+                    Title = "Message",
+                    Value = safeMessage
+                });
+
+                message.Attachments.Add(attachment);
+
+                var jsonMessage = JsonConvert.SerializeObject(message);
+                var postData = Encoding.ASCII.GetBytes(jsonMessage);
+
+                var request = WebRequest.Create(ConfigurationManager.AppSettings["SlackContactWebHook"]);
+                request.ContentType = "application/json";
+                request.Method = "POST";
+                request.ContentLength = postData.Length;
+
+                using (var dataStream = request.GetRequestStream())
+                {
+                    dataStream.Write(postData, 0, postData.Length);
+                }
+
+                using (var response = await request.GetResponseAsync() as HttpWebResponse)
+                {
+                    if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                    {
+                        return false;
+                    }
+
+                    var responseStream = response.GetResponseStream();
+
+                    if (responseStream == null)
+                    {
+                        return false;
+                    }
+
+                    using (var reader = new StreamReader(responseStream))
+                    {
+                        var responseFromServer = reader.ReadToEnd();
+
+                        if (responseFromServer.Equals("ok", StringComparison.OrdinalIgnoreCase))
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return false;
             }
 
-            if (string.IsNullOrWhiteSpace(model.emailAddress))
-            {
-                model.status.email = false;
-                submissionValid = false;
-            }
-
-            if (string.IsNullOrWhiteSpace(model.message))
-            {
-                model.status.message = false;
-                submissionValid = false;
-            }
-
-            if (string.IsNullOrWhiteSpace(model.name))
-            {
-                model.status.name = false;
-                submissionValid = false;
-            }
-
-            return submissionValid;
+            return true;
         }
     }
 }
