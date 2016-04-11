@@ -94,6 +94,7 @@
     <Content Include="content\js\bootstrap.min.js" />
     <Content Include="content\js\google-analytics.js" />
     <Content Include="content\js\jquery.min.js" />
+    <Content Include="content\js\knockout.mapping.js" />
     <Content Include="content\js\knockout.min.js" />
     <Content Include="content\js\contact-send.js" />
     <Content Include="content\js\meetup-get.js" />
