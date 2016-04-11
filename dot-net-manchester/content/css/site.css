@@ -89,3 +89,7 @@ img.sponsor-jetbrains{
 #noEvent, #eventError, #eventDetails{
     display:none;
 }
+
+.hide {
+    display: none;
+}

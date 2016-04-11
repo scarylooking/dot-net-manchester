@@ -12,6 +12,7 @@ namespace wpug.models
         public bool message { get; set; }
         public bool recaptcha { get; set; }
         public bool sent { get; set; }
+        public bool failed { get; set; }
 
         public ContactResponse()
         {
@@ -19,7 +20,8 @@ namespace wpug.models
             emailAddress = true;
             message = true;
             recaptcha = true;
-            sent = true;
+            sent = false;
+            failed = false;
         }
     }
 }

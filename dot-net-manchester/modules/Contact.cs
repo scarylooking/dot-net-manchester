@@ -23,16 +23,12 @@ namespace wpug.modules
         {
             Post["/contact", true] = async (parameters, ct) =>
             {
-                var reCaptchaToken = Request.Form["reCaptchaToken"].Value;
-
-                if (string.IsNullOrWhiteSpace(reCaptchaToken))
-                {
-                    return Nancy.HttpStatusCode.Forbidden;
-                }
 
                 var model = this.Bind<ContactRequest>();
                 var response = new ContactResponse();
                 var failureFlag = false;
+
+                var reCaptchaToken = Request.Form["reCaptchaToken"].Value;
 
                 if (!ReCaptcha.Validate(reCaptchaToken))
                 {
@@ -63,17 +59,21 @@ namespace wpug.modules
                     return Negotiate.WithModel(response).WithStatusCode(Nancy.HttpStatusCode.BadRequest);
                 }
 
-
-                var slackResult = await SendSlackMessage(model);
-
-                if (slackResult)
+                try
                 {
+                    var slackResult = await SendSlackMessage(model);
+
+                    if (slackResult)
+                    {
+                        response.sent = true;
+                    }
                 }
-                else
+                catch
                 {
+                    response.failed = true;
                 }
 
-                return View["contact", model];
+                return Negotiate.WithModel(response).WithStatusCode(Nancy.HttpStatusCode.OK);
             };
 
             Get["/contact"] = _ => navigateToContactView();
@@ -171,7 +171,7 @@ namespace wpug.modules
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return false;
             }
