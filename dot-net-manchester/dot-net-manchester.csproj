@@ -175,9 +175,6 @@
     <Content Include="favicon.ico" />
     <Content Include="img\favicons\mstile-144x144.png" />
     <Content Include="img\logo.svg" />
-    <Content Include="ApplicationInsights.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="fonts\glyphicons\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\fontawesome\fontawesome-webfont.eot" />
     <Content Include="fonts\fontawesome\fontawesome-webfont.ttf" />
@@ -199,9 +196,10 @@
     <Content Include="img\organisers\richard-garner.jpg" />
     <Content Include="img\speakers\jeff-burtoft.jpg" />
     <Content Include="img\speakers\mike-taulty.jpg" />
+    <Content Include="img\sponsors\interact.png" />
     <Content Include="img\sponsors\jetbrains.jpg" />
-    <Content Include="img\sponsors\jetbrains.svg" />
-    <Content Include="img\sponsors\telerik.png" />
+    <Content Include="img\sponsors\pluralsight.jpg" />
+    <Content Include="img\sponsors\telerik.jpg" />
     <Content Include="Scripts\date.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
@@ -213,8 +211,11 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\knockout.js" />
+    <Content Include="Scripts\knockout.mapping.js" />
     <Content Include="Scripts\meetup-event.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />

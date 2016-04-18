@@ -9,80 +9,68 @@
     <p class="lead text-center">WPUGNW is an independent community-organised group that hosts meetups in Manchester for anyone interested in designing or developing software for Windows; be that Phone, Desktop, IoT or even HoloLens.</p>
 </div>
 
-<section id="eventError">
-    <div class="lead text-center alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle" aria-hidden="true"></i> Something went wrong loading details of our next event. Check us out on <a href="http://www.meetup.com/Manchester-NET/">Meetup</a> instead.</div>
-</section>
+<section data-bind="visible: !loading()">
 
-<section id="noEvent">
-    <div class="lead text-center alert alert-warning"><i class="fa fa-fw fa-search" aria-hidden="true"></i> We're busy planning the next user group. Join our mailing list or the <a href="http://www.meetup.com/Manchester-NET/">Meetup</a> group to be notified of the next event.</div>
-</section>
-
-<section id="eventDetails">
-    <header class="page-header">
-        <h1 id="eventTitle">-</h1>
-    </header>
-
-    <p><i class="fa fa-fw fa-calendar text-primary" aria-hidden="true"></i> <span id="eventDate">-</span></p>
-    <p><i class="fa fa-fw fa-clock-o text-primary" aria-hidden="true"></i> <span id="eventStartTime">-</span> - <span id="eventEndTime">-</span></p>
-    <p><i class="fa-fw fa fa-users text-primary" aria-hidden="true"></i> <span id="eventAttendees">0</span> registered attendees</p>
-    <p>
-        <i class="fa fa-fw fa-map-marker text-primary" aria-hidden="true"></i>
-        <strong>
-            <span class="strong" id="eventLocationName"></span>
-        </strong>
-        <span id="eventLocationAddress"></span>
-    </p>
-
-    <hr>
-
-    <div id="eventText">
+    <!-- ko if: error -->
+    <div class="lead text-center alert alert-danger">
+        <i class="fa fa-fw fa-exclamation-triangle" aria-hidden="true"></i> Something went wrong loading details of our next events. Check us out at <a href="http://www.meetup.com/Manchester-NET/">Meetup</a> or <a href="https://twitter.com/wpugnw">@@wpugnw</a> instead.
     </div>
-    <br>
+    <!-- /ko -->
+    <!-- ko if: meetups().length === 0 && !error() -->
+    <div class="lead text-center alert alert-warning">
+        <i class="fa fa-fw fa-search" aria-hidden="true"></i> We're busy planning the next user group. Keep an eye on <a href="https://twitter.com/wpugnw">@@wpugnw</a> and the <a href="http://www.meetup.com/Manchester-NET/">Meetup</a> group.
+    </div>
+    <!-- /ko -->
+    <!-- ko if: meetups().length > 0 -->
+    <!-- ko foreach: meetups -->
+    <section>
+        <header class="page-header">
+            <h1 data-bind="text: name"></h1>
+        </header>
 
-    <a href="#" id="bookingButton" disabled="true" target="_blank" class="btn btn-warning">
-        <span class="fa fa-ticket" aria-hidden="true" disabled></span> Register to Attend
-    </a>
+        <p>
+            <i class="fa fa-fw fa-calendar text-primary" aria-hidden="true"></i>
+            <span data-bind="text: start.date">-</span>
+        </p>
+        <p>
+            <i class="fa fa-fw fa-clock-o text-primary" aria-hidden="true"></i>
+            <span data-bind="text: start.time"></span>
+            <!-- ko if: $data.end -->
+            - <span data-bind="visible: $data.end, text: end.time"></span>
+            <!-- /ko -->
+        </p>
+        <p>
+            <i class="fa-fw fa fa-users text-primary" aria-hidden="true"></i>
+            <span data-bind="text:attendees">0</span> registered attendees
+        </p>
+        <p>
+            <i class="fa fa-fw fa-map-marker text-primary" aria-hidden="true"></i>
+            <strong data-bind="text: venue"></strong>
+            <!-- ko if: $data.address -->
+            , <span data-bind="text: address"></span>
+            <!-- /ko -->
+        </p>
+
+        <hr>
+
+        <div data-bind="html:description"></div>
+
+        <br>
+
+        <a data-bind="attr: { href: url}, enable: url" id="bookingButton" target="_blank" class="btn btn-warning">
+            <i class="fa fa-ticket" aria-hidden="true" disabled></i> Register to Attend
+        </a>
+    </section>
+    <!-- /ko -->
+    <!-- /ko -->
 
 </section>
 
-<section id="loadingEvent">
+<section id="loadingEvent" data-bind="visible: loading">
     <div class="lead text-center alert alert-info"><i class="fa fa-fw fa-circle-o-notch fa-spin" aria-hidden="true"></i> Loading Events</div>
 </section>
 
-<section>
-    <div class="page-header">
-        <h1>Mailing List</h1>
-    </div>
 
-    <form action="//wpug.us11.list-manage.com/subscribe/post?u=2cf98230ccbc68a31492d3e5b&amp;id=7943385eb2" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="firstname">First Name:</label>
-                    <input type="text" class="form-control" name="FNAME" id="firstname">
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="lastname">Last Name:</label>
-                    <input type="text" class="form-control" name="LNAME" id="lastname">
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="emailaddress">E-mail:</label>
-            <input type="email" class="form-control" name="EMAIL" id="emailaddress">
-            <div style="position: absolute; left: -5000px;">
-                <input type="text" name="b_2cf98230ccbc68a31492d3e5b_7943385eb2" value="">
-            </div>
-        </div>
-
-        <button class="btn btn-primary" type="submit"><i class="fa fa-envelope" aria-hidden="true"></i> Subscribe</button>
-
-    </form>
-</section>
 
 <section>
     <header class="page-header">
@@ -92,6 +80,7 @@
         <a href="http://www.telerik.com/" target="_blank"><img alt="Green and black Telerik logo with 'A progress company' written below" src="~/img/sponsors/telerik.jpg" /></a>
         <a href="https://www.jetbrains.com/" target="_blank"><img alt="Colourful angular swoosh with 'Jetbrains' written in a black square in the centre" src="~/img/sponsors/jetbrains.jpg" /></a>
         <a href="https://www.pluralsight.com" target="_blank"><img alt="Pink circular Pluralsight logo with the word Pluralsight in black to the right" src="~/img/sponsors/pluralsight.jpg" /></a>
+        <a href="https://www.interact-intranet.com/" target="_blank"><img alt="Blue squares next to the word Interact in black" src="~/img/sponsors/interact.png" /></a>
     </p>
 
 </section>

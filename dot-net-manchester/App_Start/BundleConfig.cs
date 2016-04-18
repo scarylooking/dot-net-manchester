@@ -24,6 +24,13 @@ namespace wpug
                       "~/scripts/date.js",
                       "~/scripts/respond.js"));
 
+            bundles.Add(new ScriptBundle("~/js/moment").Include(
+                        "~/scripts/moment.js"));
+
+            bundles.Add(new ScriptBundle("~/js/knockout").Include(
+                      "~/scripts/knockout.js",
+                      "~/scripts/knockout.mapping.js"));
+
             bundles.Add(new ScriptBundle("~/js/meetup-event").Include(
                       "~/scripts/meetup-event.js"));
 
